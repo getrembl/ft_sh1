@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/13 16:22:36 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/20 18:13:20 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int			main(int argc, char *argv[], char *envp[])
 {
 	int		end;
 	char	**line;
+	char	*envp_bkp[];
 
+	*envp_bkp = ft_strdup(*envp);
 	end = 0;
 	if(!(*line = ft_strnew(2)))
 		return(-1);
