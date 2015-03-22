@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/20 18:13:20 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/22 20:46:10 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** pid_t	fork(void);
 */
 
-envp[8], envp[16]
+//envp[8], envp[16]
 
 int			main(int argc, char *argv[], char *envp[])
 {
