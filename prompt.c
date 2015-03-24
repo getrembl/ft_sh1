@@ -6,13 +6,13 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:14:50 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/22 19:32:35 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/24 18:25:42 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_1.h"
 
-static char	*mkpt(char const *usr,char const *pwd, char *inv)
+static char	*mkpt(char *usr,char *pwd, char *inv)
 {
 	ft_strcpy(inv, "<");
 	ft_strcat(inv, usr);
@@ -24,22 +24,30 @@ static char	*mkpt(char const *usr,char const *pwd, char *inv)
 	return (inv);
 }
 
-char		*put_prompt(const char *usr_env, const char *pwd_env)
+char		*put_prompt(char const *usr, char const *pwd)
 {
-	char *inv;
-	char const *pwd = position + ft_strlen(position);
+	char	*ret;
+	char	*bkp_usr;
+	char	*bkp_pwd;
 
-	inv = NULL;
-	if (usr_env == NULL)
-			usr_env = "";
-	if (position == NULL)
-		position = "";
-	while (pwd >= position && *pwd != '/')
-		pwd--;
-	pwd++;
-	if (!(inv = malloc(ft_strlen(usr) + ft_strlen(pwd) + 6)))
-		return(NULL);
-	if (inv != NULL)
-		inv = mkpt(usr, pwd, inv);
-	return inv;
+	if (usr)
+	{
+		bkp_usr = ft_strdup(usr);
+		bkp_usr = ft_strchr(bkp_usr, '=');
+		bkp_usr++;
+	}
+	else
+		bkp_usr = "";
+	if (pwd)
+	{
+		bkp_pwd = ft_strdup(pwd);
+		bkp_pwd = ft_strrchr(bkp_pwd, '/');
+		bkp_pwd++;
+	}
+	else
+		bkp_pwd = "";
+	if (!(ret = ft_strnew(ft_strlen(bkp_usr) + ft_strlen(bkp_pwd) + 7)))
+		return (NULL);
+	ret = mkpt(bkp_usr, bkp_pwd, ret);
+	return (ret);
 }

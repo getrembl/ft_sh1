@@ -6,12 +6,19 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 15:18:51 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/04 19:22:55 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/24 18:43:55 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+char	*ft_strcat(char *s1, const char *s2)
+{
+	ft_strcpy(&s1[ft_strlen(s1)], s2);
+	return (s1);
+}
+
+/*
 char		*ft_strcat(char *s1, const char *s2)
 {
 	int		i;
@@ -28,7 +35,7 @@ char		*ft_strcat(char *s1, const char *s2)
 		bkp[i] = s1[i];
 		i++;
 	}
-	while (s2[i_bis] != '\0')
+	while (s2[i_bis])
 	{
 		bkp[i] = s2[i_bis];
 		i++;
@@ -36,3 +43,4 @@ char		*ft_strcat(char *s1, const char *s2)
 	}
 	return (bkp);
 }
+*/

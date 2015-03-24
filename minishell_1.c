@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/22 20:46:10 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/24 18:47:02 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,33 @@
 int			main(int argc, char *argv[], char *envp[])
 {
 	int		end;
-	char	**line;
-	char	*envp_bkp[];
+	char	*line;
+	char	*s;
 
-	*envp_bkp = ft_strdup(*envp);
 	end = 0;
-	if(!(*line = ft_strnew(2)))
+	if (!(line = ft_strnew(2)))
 		return(-1);
-	while (!end)
+	if (argc && argv)
 	{
-		char *s;
-
-		s = put_prompt(envp[8], envp[16]);
-		if (s != NULL)
+		while (!end)
 		{
-			printf ("%s", s);
-			fflush (stdout);
-			free (s), s = NULL;
+			s = put_prompt(envp[8], envp[16]);
+			ft_putstr(s);
+			ft_strdel(&s);
+			get_next_line(0, &line);
+			end = strcmp(line, "exit\n") == 0;
 		}
-		get_next_line(0, line);
-		end = strcmp(*line, "quit\n") == 0;
 	}
 	return (0);
 }
+/*
+if (s != NULL)
+{
+	printf ("%s", s);
+	fflush (stdout);
+	free (s), s = NULL;
+}
+*/
 /*
 int				main(int argc, char *argv[])
 {
