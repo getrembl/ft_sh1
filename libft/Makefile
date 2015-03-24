@@ -6,7 +6,7 @@
 #    By: getrembl <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 16:47:42 by getrembl          #+#    #+#              #
-#    Updated: 2014/12/09 18:19:46 by getrembl         ###   ########.fr        #
+#    Updated: 2015/03/24 20:35:32 by getrembl         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -27,7 +27,8 @@ SRCS =				ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c\
 						ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strrchr.c\
 						ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c\
 						ft_itoa.c ft_nbdigit.c ft_strlcat.c ft_strnstr.c\
-						ft_strsplit.c ft_strsplit_bis.c ft_nwd.c ft_wdlen.c
+						ft_strsplit.c ft_strsplit_bis.c ft_nwd.c ft_wdlen.c\
+						get_next_line.c
 
 OBJS =				$(SRCS:.c=.o)
 
@@ -51,7 +52,7 @@ $(NAME):			$(OBJS)
 						ranlib $(NAME)
 
 %.o:				$(CPATH)%.c
-						$(CC) -I -o $@ -c $< $(CFLAGS)
+						$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
 						$(RM) $(RMFLAGS) $(OBJS)

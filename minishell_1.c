@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/24 18:47:02 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/24 21:55:55 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,33 @@ int			main(int argc, char *argv[], char *envp[])
 	int		end;
 	char	*line;
 	char	*s;
+	char	**envp_bkp;
+	int		i;
 
-	end = 0;
+	i = 0;
+	end = 1;
+	if(!(envp_bkp = malloc(sizeof(char *) * 100)))
+		return (-1);
+	while (envp[i])
+	{
+		if (!(*envp_bkp = malloc(sizeof(char) * ft_strlen(envp[i]) + 1)))
+			return (-1);
+		i++;
+	}
 	if (!(line = ft_strnew(2)))
 		return(-1);
 	if (argc && argv)
 	{
-		while (!end)
+		while (end)
 		{
 			s = put_prompt(envp[8], envp[16]);
 			ft_putstr(s);
 			ft_strdel(&s);
-			get_next_line(0, &line);
-			end = strcmp(line, "exit\n") == 0;
+			end = get_next_line(0, &line);
 		}
 	}
 	return (0);
 }
-/*
-if (s != NULL)
-{
-	printf ("%s", s);
-	fflush (stdout);
-	free (s), s = NULL;
-}
-*/
 /*
 int				main(int argc, char *argv[])
 {
