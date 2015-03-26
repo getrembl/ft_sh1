@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/26 19:24:36 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/26 20:23:27 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,12 @@ int				main(int argc, char *argv[], char *envp[])
 	char		*s;
 	char		**envp_bkp;
 	char		**cmd;
+	char		*com;
+	int			i;
 
 	end = 1;
+	i = 0;
+	com = ft_strdup("/usr/bin/");
 	if (!(envp_bkp = env_cpy(envp)))
 		return (-1);
 	if (!(line = ft_strnew(2)))
@@ -63,7 +67,8 @@ int				main(int argc, char *argv[], char *envp[])
 			ft_strdel(&s);
 			end = get_next_line(0, &line);
 			cmd = ft_strsplit(line, ' ');
-			execve("/usr/bin", cmd, envp_bkp);
+			ft_strcat(com, cmd[0]);
+			execve(com, cmd, envp);
 		}
 	}
 	return (0);
