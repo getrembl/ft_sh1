@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/24 21:55:55 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/26 19:24:36 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,55 +22,64 @@
 ** pid_t	fork(void);
 */
 
-//envp[8], envp[16]
-
-int			main(int argc, char *argv[], char *envp[])
+static char		**env_cpy(char **envp)
 {
-	int		end;
-	char	*line;
-	char	*s;
-	char	**envp_bkp;
-	int		i;
+	char		**ret;
+	int			i;
 
 	i = 0;
-	end = 1;
-	if(!(envp_bkp = malloc(sizeof(char *) * 100)))
-		return (-1);
+	if (!(ret = (char **)malloc(sizeof(char *) * ft_tablen(envp) + 1)))
+		return (NULL);
+	ret[ft_tablen(envp) + 1] = NULL;
 	while (envp[i])
 	{
-		if (!(*envp_bkp = malloc(sizeof(char) * ft_strlen(envp[i]) + 1)))
-			return (-1);
+		if (!(ret[i] = ft_strdup(envp[i])))
+			return (NULL);
 		i++;
 	}
+	return (ret);
+}
+
+int				main(int argc, char *argv[], char *envp[])
+{
+	int			end;
+	char		*line;
+	char		*s;
+	char		**envp_bkp;
+	char		**cmd;
+
+	end = 1;
+	if (!(envp_bkp = env_cpy(envp)))
+		return (-1);
 	if (!(line = ft_strnew(2)))
-		return(-1);
+		return (-1);
 	if (argc && argv)
 	{
 		while (end)
 		{
-			s = put_prompt(envp[8], envp[16]);
+			if (!(s = prompt(envp_bkp)))
+				s = "$>";
 			ft_putstr(s);
 			ft_strdel(&s);
 			end = get_next_line(0, &line);
+			cmd = ft_strsplit(line, ' ');
+			execve("/usr/bin", cmd, envp_bkp);
 		}
 	}
 	return (0);
 }
+
 /*
-int				main(int argc, char *argv[])
-{
-	pid_t		father;
-	father = fork();
-	if (father > 0)
-	{
-		put_prompt();
-		wait(NULL);
-	}
-	if (father == 0)
-	{
-		execve("/bin/ls", argv, NULL);
-		fork();
-	}
-	return (0);
-}
+**	pid_t		father;
+**	father = fork();
+**	if (father > 0)
+**	{
+**		put_prompt();
+**		wait(NULL);
+**	}
+**	if (father == 0)
+**	{
+**		execve("/bin/ls", argv, NULL);
+**		fork();
+**	}
 */

@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_1.h                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: getrembl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/12 21:15:32 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/26 19:22:17 by getrembl         ###   ########.fr       */
+/*   Created: 2014/11/03 17:55:55 by getrembl          #+#    #+#             */
+/*   Updated: 2015/03/26 16:52:03 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_1_H
-# define MINISHELL_1_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
-# include <stdio.h>
-# include "get_next_line.h"
+size_t		ft_tablen(char **s)
+{
+	size_t	count;
 
-char		*prompt(char **envp);
-
-#endif
+	count = 0;
+	while (s[count])
+		count++;
+	return (count);
+}

@@ -6,7 +6,7 @@
 /*   By: getrembl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 16:46:43 by getrembl          #+#    #+#             */
-/*   Updated: 2014/12/09 17:04:14 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/26 16:52:24 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int				ft_toupper(int c);
 size_t			ft_nwd(char const *str, char c);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 size_t			ft_strlen(const char *s);
+size_t			ft_tablen(char **s);
 size_t			ft_wdlen(char const *s, char c, int i);
 
 void			*ft_memalloc(size_t size);
