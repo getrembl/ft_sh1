@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/26 20:23:27 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/28 18:49:39 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,8 @@ int				main(int argc, char *argv[], char *envp[])
 	char		*line;
 	char		*s;
 	char		**envp_bkp;
-	char		**cmd;
-	char		*com;
-	int			i;
 
 	end = 1;
-	i = 0;
-	com = ft_strdup("/usr/bin/");
 	if (!(envp_bkp = env_cpy(envp)))
 		return (-1);
 	if (!(line = ft_strnew(2)))
@@ -61,18 +56,22 @@ int				main(int argc, char *argv[], char *envp[])
 	{
 		while (end)
 		{
-			if (!(s = prompt(envp_bkp)))
-				s = "$>";
+			s = prompt(envp_bkp);
 			ft_putstr(s);
 			ft_strdel(&s);
 			end = get_next_line(0, &line);
-			cmd = ft_strsplit(line, ' ');
-			ft_strcat(com, cmd[0]);
-			execve(com, cmd, envp);
+			execute(line, envp_bkp);
 		}
 	}
 	return (0);
 }
+
+/*
+** afficher un prompt
+** lire la ligne
+** excecuter la commande
+** boucler le tout
+*/
 
 /*
 **	pid_t		father;
