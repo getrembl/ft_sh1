@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/28 18:49:39 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/03/31 16:47:36 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int				main(int argc, char *argv[], char *envp[])
 	char		*line;
 	char		*s;
 	char		**envp_bkp;
+	pid_t		father;
 
 	end = 1;
 	if (!(envp_bkp = env_cpy(envp)))
@@ -56,11 +57,21 @@ int				main(int argc, char *argv[], char *envp[])
 	{
 		while (end)
 		{
-			s = prompt(envp_bkp);
-			ft_putstr(s);
-			ft_strdel(&s);
-			end = get_next_line(0, &line);
-			execute(line, envp_bkp);
+			father = fork();
+			if (father > 0)
+			{
+				s = prompt(envp_bkp);
+				ft_putstr(s);
+				ft_strdel(&s);
+				if ((end = get_next_line(0, &line)) == -1)
+					return (-1);
+				wait(NULL);
+			}
+			if (father == 0)
+			{
+				execute(line, envp_bkp);
+				fork();
+			}
 		}
 	}
 	return (0);
