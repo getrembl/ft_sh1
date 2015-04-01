@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:15:32 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/27 19:21:33 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/01 19:20:14 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 
 typedef void (*sighandler_t)(int);
 
-char		*prompt(char **envp);
-
 void		execute(char *line, char **envp_bkp);
+void		prompt(char **envp);
 
 #endif
