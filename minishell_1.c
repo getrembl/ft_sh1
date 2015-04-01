@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/01 19:31:39 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/01 19:33:37 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				main(int argc, char *argv[], char *envp[])
 				prompt(envp_bkp);
 				if ((end = get_next_line(0, &line)) == -1)
 					return (-1);
-				wait();
+				wait(NULL);
 			}
 			if (father == 0)
 			{
