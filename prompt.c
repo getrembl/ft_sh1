@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:14:50 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/01 19:19:47 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/01 19:54:04 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		prompt(char **envp)
 	}
 	usr = mk_usr(usr);
 	pwd = mk_pwd(pwd);
-	ret = ft_strnew(ft_strlen(usr) + ft_strlen(pwd) + 7)
+	ret = ft_strnew(ft_strlen(usr) + ft_strlen(pwd) + 7);
 	ret = mkpt(usr, pwd, ret);
 	ft_putstr(ret);
 	ft_strdel(&ret);
