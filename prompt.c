@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:14:50 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/01 19:54:04 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/06 20:10:36 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static char	*mk_usr(char *usr)
 {
 	if (usr)
 	{
-		usr = ft_strdup(usr);
+		if(!(usr = ft_strdup(usr)))
+			return (NULL);
 		usr = ft_strchr(usr, '=');
 		usr++;
 	}
