@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/27 18:06:59 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/06 20:46:00 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/06 20:59:12 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void		ft_builtin(char **dec, char **envp)
 
 	i = 0;
 	if (ft_strncmp(dec[0], "cd", ft_strlen(dec[0])) == 0)
-		if((i = chdir(dec[0])) == -1)
+		if((i = chdir(dec[1])) == -1)
 			exit(EXIT_FAILURE);
 	if (ft_strncmp(dec[0], "setenv", ft_strlen(dec[0])) == 0)
 		if((i = ft_setenv(dec[1], dec[2], ft_atoi(dec[3]), envp)) == -1
@@ -98,7 +98,7 @@ static void		ft_builtin(char **dec, char **envp)
 	{
 		if (envp)
 			while (envp[i])
-				ft_putstr(envp[i++]);
+				ft_putendl(envp[i++]);
 		else
 			ft_putendl("Environment is empty");
 	}
@@ -121,7 +121,10 @@ void			execute(char *line, char **envp)
 			|| ft_strncmp(dec[0], "unsetenv", ft_strlen(dec[0])) == 0
 			|| ft_strncmp(dec[0], "env", ft_strlen(dec[0])) == 0
 			|| ft_strncmp(dec[0], "exit", ft_strlen(dec[0])) == 0)
+		{
 			ft_builtin(dec, envp);
+			exit(0);
+		}
 		cmd = ft_strdup("/usr/bin");
 		cmd = ft_strcat(cmd, dec[0]);
 		dec = mv_tab(dec);

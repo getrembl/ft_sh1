@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/04 20:39:29 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/06 21:05:33 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ int				main(int argc, char *argv[], char *envp[])
 			father = fork();
 			if (father == 0)
 			{
-				execve("/bin/date", argv, envp);
+//				execve("/bin/date", argv, envp);
+				execute(line, envp_bkp);
 				exit(0);
-//				execute(line, envp_bkp);
 			}
 			else
 			{
 				prompt(envp_bkp);
 				if ((end = get_next_line(0, &line)) == -1)
 					return (-1);
-				wait(NULL);
+				waitpid(father, 0, 0);
 			}
 		}
 	}
