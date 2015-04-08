@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:14:50 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/06 20:10:36 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/08 21:01:48 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*mkpt(char *usr, char *pwd, char *inv)
 	ft_strcat(inv, pwd);
 	ft_strcat(inv, ">");
 	ft_strcat(inv, ">");
-	ft_strcat(inv, "\t");
+	ft_strcat(inv, "  ");
 	return (inv);
 }
 
@@ -59,11 +59,13 @@ void		prompt(char **envp)
 	int		i;
 
 	i = 0;
+	usr = NULL;
+	pwd = NULL;
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "USER", 4) == 0)
 			usr = ft_strdup(envp[i]);
-		else if (ft_strncmp(envp[i], "PWD", 3) == 0)
+		if (ft_strncmp(envp[i], "PWD", 3) == 0)
 			pwd = ft_strdup(envp[i]);
 		i++;
 	}

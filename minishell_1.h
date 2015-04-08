@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/04 19:03:48 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/04 19:09:48 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/08 21:13:11 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <signal.h>
+# include <errno.h>
 # include "get_next_line.h"
 
 typedef void	(*sighandler_t)(int);
