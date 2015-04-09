@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/27 18:06:59 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/08 21:46:09 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/09 20:54:03 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int		ft_setenv(char *set, int overwrite, char **envp)
 				ft_strcat(envp[i], tab[1]);
 				return (0);
 			}
-				else
+			else
 			{
 				ft_strdel(&envp[i]);
 				if (!(envp[i] = ft_strdup(tab[0])))
@@ -85,11 +85,26 @@ static int		ft_unsetenv(char *var, char **envp)
 static void		ft_builtin(char **dec, char **envp)
 {
 	int			i;
+	size_t		l;
+	char		*pwd;
 
-	i = 0;
-	if (ft_strncmp(dec[0], "cd", 2) == 0)
-		if((i = chdir(dec[1])) == -1)
+	i = 1;
+	l = 5000;
+	while (i != 0)
+	{
+		pwd = ft_strnew(l);
+		if ((pwd = getcwd(pwd,l)) != NULL)
+			i = 0;
+		else
+			l *= 2;
+	}
+	if ((ft_strncmp(dec[0], "cd", 2) == 0))
+	{
+		ft_strcat(pwd, "/");
+		ft_strcat(pwd, dec[1]);
+		if((i = chdir(pwd)) == -1)
 			exit(EXIT_FAILURE);
+	}
 	if (ft_strncmp(dec[0], "setenv", 6) == 0)
 		if((i = ft_setenv(dec[1], ft_atoi(dec[2]), envp)) == -1
 		   || dec[1][ft_strlen(dec[1])] != '=')
@@ -108,6 +123,7 @@ static void		ft_builtin(char **dec, char **envp)
 		else
 			ft_putendl("Environment is empty");
 	}
+	ft_strdel(&pwd);
 	exit(EXIT_SUCCESS);
 }
 
@@ -123,7 +139,10 @@ void			execute(char *line, char **envp)
 		|| ft_strncmp(dec[0], "unsetenv", 8) == 0
 		|| ft_strncmp(line, "env", 3) == 0)
 		ft_builtin(dec, envp);
-	cmd = ft_strdup("/usr/bin");
+	int i = 0;
+	while (dec[i])
+		ft_putendl(dec[i++]);
+	cmd = ft_strdup("/usr/bin/");
 	cmd = ft_strcat(cmd, dec[0]);
 	dec = mv_tab(dec);
 	if ((ret = execve(cmd, dec, envp)) == -1)
@@ -132,3 +151,14 @@ void			execute(char *line, char **envp)
 
 //	sur les built-in exit automatiquement
 //  retour execve
+
+
+
+
+
+
+
+
+
+
+

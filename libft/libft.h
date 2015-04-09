@@ -6,7 +6,7 @@
 /*   By: getrembl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 16:46:43 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/26 16:52:24 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/09 18:44:38 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <string.h>
 
 char			**ft_strsplit(char const *s, char c);
-char			**ft_strsplit_bis(char const *s, char c, char **tab, size_t i2);
 char			*ft_itoa(int n);
 char			*ft_strcat(char *s1, const char *s2);
 char			*ft_strchr(const char *s, int c);
