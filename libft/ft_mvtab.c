@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wdlen.c                                         :+:      :+:    :+:   */
+/*   ft_mvtab.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/09 18:20:10 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/11 19:06:21 by getrembl         ###   ########.fr       */
+/*   Created: 2015/04/11 23:01:49 by getrembl          #+#    #+#             */
+/*   Updated: 2015/04/11 23:06:37 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_wdlen(char const *s, char c, int i)
+char		**ft_mvtab(char **tab, int i)
 {
-	size_t	len;
-
-	len = 0;
-	if (s)
-		while (s[i] != c && s[i])
-		{
-			i++;
-			len++;
-		}
-	return (len);
+	while (tab[i])
+	{
+		tab[i][ft_strlen(tab[i] + 1) + 1] = '\0';
+		tab[i] = ft_strdup(tab[i + 1]);
+		i++;
+	}
+	return (tab);
 }

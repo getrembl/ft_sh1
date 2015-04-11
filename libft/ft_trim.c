@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wdlen.c                                         :+:      :+:    :+:   */
+/*   ft_trim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/09 18:20:10 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/11 19:06:21 by getrembl         ###   ########.fr       */
+/*   Created: 2015/04/11 18:29:08 by getrembl          #+#    #+#             */
+/*   Updated: 2015/04/11 18:42:29 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_wdlen(char const *s, char c, int i)
+char		*ft_trim(char *str, char c)
 {
-	size_t	len;
+	char	*bkp;
+	size_t	i;
 
-	len = 0;
-	if (s)
-		while (s[i] != c && s[i])
-		{
-			i++;
-			len++;
-		}
-	return (len);
+	i = ft_strlen(str) -1;
+	while (str[i] == c)
+	{
+		str[i] = '\0';
+		i--;
+	}
+	while (*str == c)
+		str++;
+	bkp = ft_strdup(str);
+	return (bkp);
 }
