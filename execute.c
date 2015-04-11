@@ -6,25 +6,11 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/27 18:06:59 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/09 20:54:03 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/11 23:32:05 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_1.h"
-
-static char		**mv_tab(char **tab)
-{
-	int			i;
-
-	i = 0;
-	while (tab[i])
-	{
-		tab[i][ft_strlen(tab[i] + 1) + 1] = 0;
-		tab[i] = ft_strdup(tab[i + 1]);
-		i++;
-	}
-	return (tab);
-}
 
 static int		ft_setenv(char *set, int overwrite, char **envp)
 {
@@ -103,7 +89,14 @@ static void		ft_builtin(char **dec, char **envp)
 		ft_strcat(pwd, "/");
 		ft_strcat(pwd, dec[1]);
 		if((i = chdir(pwd)) == -1)
-			exit(EXIT_FAILURE);
+				exit(EXIT_FAILURE);
+		i = 0;
+		while (envp[i])
+		{
+			if (ft_strncmp(envp[i], "PWD", 3) == 0)
+				envp[i] = ft_strdup(pwd);
+			i++;
+		}
 	}
 	if (ft_strncmp(dec[0], "setenv", 6) == 0)
 		if((i = ft_setenv(dec[1], ft_atoi(dec[2]), envp)) == -1
@@ -139,26 +132,11 @@ void			execute(char *line, char **envp)
 		|| ft_strncmp(dec[0], "unsetenv", 8) == 0
 		|| ft_strncmp(line, "env", 3) == 0)
 		ft_builtin(dec, envp);
-	int i = 0;
-	while (dec[i])
-		ft_putendl(dec[i++]);
 	cmd = ft_strdup("/usr/bin/");
 	cmd = ft_strcat(cmd, dec[0]);
-	dec = mv_tab(dec);
 	if ((ret = execve(cmd, dec, envp)) == -1)
 		exit(0);
 }
 
 //	sur les built-in exit automatiquement
 //  retour execve
-
-
-
-
-
-
-
-
-
-
-
