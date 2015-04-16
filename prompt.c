@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:14:50 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/08 21:01:48 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/15 15:29:36 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void		prompt(char **envp)
 	int		i;
 
 	i = 0;
-	usr = NULL;
-	pwd = NULL;
+	usr = ft_strnew(2);;
+	pwd = ft_strnew(2);
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "USER", 4) == 0)

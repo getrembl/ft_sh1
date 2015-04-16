@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/11 23:24:55 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/16 19:45:41 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 ** pid_t	waitpid(pid_t pid, int *stat_loc, int options);
 ** void		exit(int status);
 ** pid_t	fork(void);
+**	ft_putendl("test");
 */
 
 static char		**env_cpy(char **envp)
@@ -30,7 +31,7 @@ static char		**env_cpy(char **envp)
 	i = 0;
 	if (!(ret = (char **)malloc(sizeof(char *) * ft_tablen(envp) + 1)))
 		return (NULL);
-	ret[ft_tablen(envp) + 1] = NULL;
+	ret[ft_tablen(envp)] = NULL;
 	while (envp[i])
 	{
 		if (!(ret[i] = ft_strdup(envp[i])))
@@ -40,35 +41,47 @@ static char		**env_cpy(char **envp)
 	return (ret);
 }
 
-int				main(int argc, char *argv[], char *envp[])
+static void			ft_sh1(char **envp, char *line)
 {
 	int			end;
-	char		*line;
-	char		**envp_bkp;
 	pid_t		father;
+	pid_t		pid;
 
 	end = 1;
-	if (!(envp_bkp = env_cpy(envp)))
-		return (-1);
-	if (!(line = ft_strnew(2)) || !argc || !argv)
-		return (-1);
-	while (end)
+	while(end)
 	{
-		father = fork();
-		if (father != 0)
+		father = getpid();
+		pid = fork();
+		if (pid == -1)
+			exit(errno);
+		if (pid > 0)
 		{
-			prompt(envp_bkp);
 			if ((end = get_next_line(0, &line)) == -1)
-				return (-1);
+				exit(EXIT_FAILURE);
 			if (ft_strncmp(line, "exit", 5) == 0)
 				exit(EXIT_SUCCESS);
-			waitpid(father, 0, 0);
+			waitpid(pid, 0, 0);
 		}
-		else
+		if (pid == 0)
 		{
-			execute(line, envp_bkp);
+			prompt(envp);
+			execute(line, envp);
 		}
 	}
+}
+
+int				main(int argc, char *argv[], char *envp[])
+{
+	char		*line;
+	char		**envp_bkp;
+
+	if (!envp || !*envp)
+		return (2);
+	if (!(line = ft_strnew(2)) || !argc || !argv)
+		return (-1);
+	if (!(envp_bkp = env_cpy(envp)))
+		return (-1);
+	ft_sh1(envp_bkp, line);
 	return (0);
 }
 

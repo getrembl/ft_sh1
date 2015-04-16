@@ -6,13 +6,17 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/27 18:06:59 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/11 23:32:05 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/16 19:43:00 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_1.h"
 
-static int		ft_setenv(char *set, int overwrite, char **envp)
+/*
+** ft_putendl(test);
+*/
+
+static char		**ft_setenv(char *set, int overwrite, char **envp)
 {
 	int			i;
 	char		**tab;
@@ -34,7 +38,7 @@ static int		ft_setenv(char *set, int overwrite, char **envp)
 			{
 				ft_strdel(&envp[i]);
 				if (!(envp[i] = ft_strdup(tab[0])))
-					return (-1);
+					return (NULL);
 				ft_strcat(envp[i], tab[1]);
 				return (0);
 			}
@@ -42,12 +46,12 @@ static int		ft_setenv(char *set, int overwrite, char **envp)
 		i++;
 	}
 	if (!(envp[i] = ft_strdup(tab[0])))
-		return (-1);
+		return (NULL);
 	ft_strcat(envp[i], tab[1]);
-	return (0);
+	return (envp);
 }
 
-static int		ft_unsetenv(char *var, char **envp)
+static char		**ft_unsetenv(char *var, char **envp)
 {
 	int			i;
 
@@ -65,7 +69,7 @@ static int		ft_unsetenv(char *var, char **envp)
 	envp[i - 1] = ft_strnew(ft_strlen(envp[i - 1]));
 	ft_strdel(&envp[i - 1]);
 	envp[i] = NULL;
-	return(0);
+	return(envp);
 }
 
 static void		ft_builtin(char **dec, char **envp)
@@ -99,11 +103,10 @@ static void		ft_builtin(char **dec, char **envp)
 		}
 	}
 	if (ft_strncmp(dec[0], "setenv", 6) == 0)
-		if((i = ft_setenv(dec[1], ft_atoi(dec[2]), envp)) == -1
-		   || dec[1][ft_strlen(dec[1])] != '=')
+		if(!(envp = ft_setenv(dec[1], ft_atoi(dec[2]), envp)))
 			exit(EXIT_FAILURE);
 	if (ft_strncmp(dec[0], "unsetenv", 8) == 0)
-		if((i = ft_unsetenv(dec[1], envp)) == -1)
+		if(!(envp = ft_unsetenv(dec[1], envp)))
 			exit(EXIT_FAILURE);
 	if (ft_strncmp(dec[0], "env", 3) == 0)
 	{
@@ -117,26 +120,65 @@ static void		ft_builtin(char **dec, char **envp)
 			ft_putendl("Environment is empty");
 	}
 	ft_strdel(&pwd);
-	exit(EXIT_SUCCESS);
+}
+
+char			*ft_chkpath(char **envp)
+{
+	int			i;
+	char		*ret;
+
+	i = 0;
+	ret = ft_strnew(2);
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			ret = ft_strdup(envp[i]);
+			return (ret);
+		}
+		i++;
+	}
+	return (NULL);
 }
 
 void			execute(char *line, char **envp)
 {
 	char		**dec;
-	char		*cmd;
-	int			ret;
+	char		*path;
+	char		**path_tab;
+	int			i;
 
+	i = 0;
+	if (!(path = ft_chkpath(envp)))
+		exit(EXIT_FAILURE);
 	dec = ft_strsplit(line, ' ');
 	if (ft_strncmp(dec[0], "cd", 2) == 0
 		|| ft_strncmp(dec[0], "setenv", 6) == 0
 		|| ft_strncmp(dec[0], "unsetenv", 8) == 0
 		|| ft_strncmp(line, "env", 3) == 0)
 		ft_builtin(dec, envp);
-	cmd = ft_strdup("/usr/bin/");
-	cmd = ft_strcat(cmd, dec[0]);
-	if ((ret = execve(cmd, dec, envp)) == -1)
-		exit(0);
+	else
+	{
+		path_tab = ft_strsplit(path, ':');
+		while (path_tab[i])
+		{
+			ft_strcat(path_tab[i], "/");
+			if (access(ft_strcat(path_tab[i], dec[0]), X_OK) == 0)
+			{
+				if((execve(path_tab[i], dec, envp)) == -1)
+					exit(EXIT_FAILURE);
+				else
+					exit(EXIT_SUCCESS);
+			}
+			i++;
+		}
+	}
+	exit(EXIT_SUCCESS);
 }
 
 //	sur les built-in exit automatiquement
 //  retour execve
+
+
+
+// utiliser acces pour checker si la commande existe ou non
