@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/16 19:45:41 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/21 22:38:49 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,17 @@ static void			ft_sh1(char **envp, char *line)
 			exit(errno);
 		if (pid > 0)
 		{
+			prompt(envp);
 			if ((end = get_next_line(0, &line)) == -1)
 				exit(EXIT_FAILURE);
+			line = ft_trim(line, '\t');
+			line = ft_trim(line, ' ');
 			if (ft_strncmp(line, "exit", 5) == 0)
 				exit(EXIT_SUCCESS);
 			waitpid(pid, 0, 0);
 		}
 		if (pid == 0)
 		{
-			prompt(envp);
 			execute(line, envp);
 		}
 	}
@@ -76,11 +78,17 @@ int				main(int argc, char *argv[], char *envp[])
 	char		**envp_bkp;
 
 	if (!envp || !*envp)
-		return (2);
+	{
+		ft_putendl_fd("Environment is empty. Retry with a good environment", 2);
+		return (-1);
+	}
 	if (!(line = ft_strnew(2)) || !argc || !argv)
 		return (-1);
 	if (!(envp_bkp = env_cpy(envp)))
+	{
+		ft_putendl_fd("Environment Error. Find project's developper and kick him", 2);
 		return (-1);
+	}
 	ft_sh1(envp_bkp, line);
 	return (0);
 }
