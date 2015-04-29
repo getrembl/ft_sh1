@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/21 22:38:49 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/04/29 17:48:41 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,25 @@ static char		**env_cpy(char **envp)
 static void			ft_sh1(char **envp, char *line)
 {
 	int			end;
-	pid_t		father;
 	pid_t		pid;
 
 	end = 1;
+	pid = fork();
 	while(end)
 	{
-		father = getpid();
-		pid = fork();
+		prompt(envp);
+		if ((end = get_next_line(0, &line)) == -1)
+			exit(EXIT_FAILURE);
+		line = ft_trim(line, '\t');
+		line = ft_trim(line, ' ');
+		if (ft_strncmp(line, "exit", 5) == 0)
+			exit(EXIT_SUCCESS);
 		if (pid == -1)
 			exit(errno);
 		if (pid > 0)
-		{
-			prompt(envp);
-			if ((end = get_next_line(0, &line)) == -1)
-				exit(EXIT_FAILURE);
-			line = ft_trim(line, '\t');
-			line = ft_trim(line, ' ');
-			if (ft_strncmp(line, "exit", 5) == 0)
-				exit(EXIT_SUCCESS);
 			waitpid(pid, 0, 0);
-		}
 		if (pid == 0)
-		{
 			execute(line, envp);
-		}
 	}
 }
 
