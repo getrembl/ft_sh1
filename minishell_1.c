@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/29 17:48:41 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/04 10:07:29 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void			ft_sh1(char **envp, char *line)
 	pid_t		pid;
 
 	end = 1;
-	pid = fork();
 	while(end)
 	{
 		prompt(envp);
@@ -57,8 +56,7 @@ static void			ft_sh1(char **envp, char *line)
 		line = ft_trim(line, ' ');
 		if (ft_strncmp(line, "exit", 5) == 0)
 			exit(EXIT_SUCCESS);
-		if (pid == -1)
-			exit(errno);
+		pid = fork();
 		if (pid > 0)
 			waitpid(pid, 0, 0);
 		if (pid == 0)
