@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:14:50 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/15 15:29:36 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/06 17:58:19 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static char	*mkpt(char *usr, char *pwd, char *inv)
 {
 	ft_strcpy(inv, "<");
 	ft_strcat(inv, usr);
-	ft_strcat(inv, " : ");
+	ft_strcat(inv, " @ ");
 	ft_strcat(inv, pwd);
 	ft_strcat(inv, ">");
-	ft_strcat(inv, ">");
+	ft_strcat(inv, ":");
 	ft_strcat(inv, "  ");
 	return (inv);
 }
@@ -38,11 +38,14 @@ static char	*mk_usr(char *usr)
 	return (usr);
 }
 
-static char	*mk_pwd(char *pwd)
+static char	*mk_pwd(void)
 {
+	char	*pwd;
+
+	pwd = ft_strnew(2);
+	getcwd(pwd, BUFFERSIZE);
 	if (pwd)
 	{
-		pwd = ft_strdup(pwd);
 		pwd = ft_strrchr(pwd, '/');
 		pwd++;
 	}
@@ -60,19 +63,19 @@ void		prompt(char **envp)
 
 	i = 0;
 	usr = ft_strnew(2);;
-	pwd = ft_strnew(2);
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "USER", 4) == 0)
 			usr = ft_strdup(envp[i]);
-		if (ft_strncmp(envp[i], "PWD", 3) == 0)
-			pwd = ft_strdup(envp[i]);
 		i++;
 	}
 	usr = mk_usr(usr);
-	pwd = mk_pwd(pwd);
+	pwd = mk_pwd();
 	ret = ft_strnew(ft_strlen(usr) + ft_strlen(pwd) + 7);
 	ret = mkpt(usr, pwd, ret);
 	ft_putstr(ret);
 	ft_strdel(&ret);
 }
+
+
+

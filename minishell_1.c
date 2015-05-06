@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/04 10:07:29 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/06 17:51:04 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void			ft_sh1(char **envp, char *line)
 	pid_t		pid;
 
 	end = 1;
-	while(end)
+	while (end)
 	{
 		prompt(envp);
 		if ((end = get_next_line(0, &line)) == -1)

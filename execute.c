@@ -6,12 +6,11 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/27 18:06:59 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/04 17:29:25 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/06 19:22:17 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_1.h"
-#define BUFFERSIZE 2000
 
 /*
 ** ft_putendl(test);
@@ -75,70 +74,14 @@ static char		**ft_unsetenv(char *var, char **envp)
 	envp[i] = NULL;
 	return(envp);
 }
-/*
-static int		ft_cd(char **dec, char *pwd, int i, char **envp)
-{
-	if (!dec[1])
-		dec[1] = ft_strdup("~");
-	if (dec[1][0] == '/')
-		pwd = ft_strdup(dec[1]);
-	else if (ft_strncmp(dec[1], "-", 1) == 0)
-	{
-		i = 0;
-		while (envp[i])
-		{
-			if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
-			{
-				pwd = ft_strdup(envp[i]);
-				pwd = ft_strchr(pwd, '=');
-			}
-		}
-	}
-	else
-	{
-		ft_strcat(pwd, "/");
-		ft_strcat(pwd, dec[1]);
-	}
-	if (access(pwd, F_OK) == 0)
-	{
-		if (access(pwd, R_OK) == 0)
-		{
-			if(chdir(pwd) != 0)
-				return (-1);
-		}
-		else
-		{
-			ft_putendl_fd("You don't have a rights.", 2);
-			return (-1);
-		}
-	}
-	else
-	{
-		ft_putendl_fd("This directory doesn't exist.", 2);
-		return (-1);
-	}
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PWD", 3) == 0)
-		{
-			envp[i] = ft_strdup(pwd);
-			return (0);
-		}
-		i++;
-	}
-	return (0);
-}*/
 
-static int		ft_cd(char *pth)
+static int		ft_cd(char *pth, char *cwd)
 {
 	char		path[BUFFERSIZE];
-	char		cwd[BUFFERSIZE];
 
 	ft_strcpy(path, pth);
 	if(pth[0] != '/')
 	{
-		getcwd(cwd, BUFFERSIZE);
 		ft_strcat(cwd, "/");
 		ft_strcat(cwd, path);
 		if (access(cwd, F_OK) == 0)
@@ -202,29 +145,32 @@ static void		ft_builtin(char **dec, char **envp)
 	}
 	if ((ft_strncmp(dec[0], "cd", 2) == 0))
 	{
-//		if((ft_cd(dec, pwd, i, envp)) != 0)
-		if((ft_cd(dec[1])) != 0)
+		if((ft_cd(dec[1], pwd)) != 0)
 			exit(EXIT_FAILURE);
-		else
-			while (envp[i])
-			{
-				if (strncmp(envp[i], "PWD", 3) == 0)
-				{
-					envp[i] = ft_strnew(5000);
-					envp[i] = ft_strcat("PWD=", getcwd(envp[i], BUFFERSIZE));
-				}
-				i++;
-			}
+/*		else
+		{
 			while (envp[i])
 			{
 				if (strncmp(envp[i], "OLDPWD", 6) == 0)
 				{
 					envp[i] = ft_strnew(5000);
-					envp[i] = ft_strcat("OLDPWD", pwd);
+					ft_strcpy(envp[i], "OLDPWD=");
+					ft_strcat(envp[i], pwd);
 				}
 				i++;
 			}
-	}
+			while (envp[i])
+			{
+				if (strncmp(envp[i], "PWD", 3) == 0)
+				{
+					envp[i] = ft_strnew(5000);
+					ft_strcpy(envp[i], "PWD=");
+					ft_strcat(envp[i], getcwd(envp[i], BUFFERSIZE));
+				}
+				i++;
+			}
+		}
+*/	}
 	if ((ft_strncmp(dec[0], "setenv", 6) == 0)
 		|| (ft_strncmp(dec[0], "export", 6) == 0))
 		if(!(envp = ft_setenv(dec[1], ft_atoi(dec[2]), envp)))
@@ -305,9 +251,9 @@ void			execute(char *line, char **envp)
 	}
 }
 
-//	sur les built-in exit automatiquement
+//	sur les built-in ne pas exit
 //  retour execve
 
 
 
-// utiliser acces pour checker si la commande existe ou non
+// utiliser access pour checker si la commande existe ou non
