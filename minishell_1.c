@@ -6,22 +6,11 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/06 17:51:04 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/15 11:56:28 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_1.h"
-
-/*
-** int		execve(const char *path, char *const argv[], const *const envp[]);
-** pid_t	wait(int *stat_loc);
-** pid_t	wait3(int *stat_loc, int options, struct rusage *rusage);
-** pid_t	wait4(pid_t pid, int *stat_loc, int options, struct rusage *rusage);
-** pid_t	waitpid(pid_t pid, int *stat_loc, int options);
-** void		exit(int status);
-** pid_t	fork(void);
-**	ft_putendl("test");
-*/
 
 static char		**env_cpy(char **envp)
 {
@@ -32,6 +21,7 @@ static char		**env_cpy(char **envp)
 	if (!(ret = (char **)malloc(sizeof(char *) * ft_tablen(envp) + 1)))
 		return (NULL);
 	ret[ft_tablen(envp)] = NULL;
+	ret[ft_tablen(envp) + 1] = NULL;
 	while (envp[i])
 	{
 		if (!(ret[i] = ft_strdup(envp[i])))
@@ -41,10 +31,34 @@ static char		**env_cpy(char **envp)
 	return (ret);
 }
 
+static void			ft_check(char **envp, char **dec)
+{
+	pid_t		pid;
+
+	if (ft_strncmp(dec[0], "cd", 2) == 0
+		|| ft_strncmp(dec[0], "env", 3) == 0
+		|| ft_strncmp(dec[0], "setenv", 6) == 0
+		|| ft_strncmp(dec[0], "export", 6) == 0
+		|| ft_strncmp(dec[0], "unsetenv", 8) == 0)
+	{
+		if (!(envp = ft_builtin(dec, envp)))
+			ft_putendl_fd("Error. find project's developper and kick him", 2);
+	}
+	else
+	{
+		pid = fork();
+		if (pid > 0)
+			waitpid(pid, 0, 0);
+		if (pid == 0)
+			execute(dec, envp);
+	}
+}
+
 static void			ft_sh1(char **envp, char *line)
 {
 	int			end;
-	pid_t		pid;
+	char		**dec;
+	int			i;
 
 	end = 1;
 	while (end)
@@ -52,15 +66,18 @@ static void			ft_sh1(char **envp, char *line)
 		prompt(envp);
 		if ((end = get_next_line(0, &line)) == -1)
 			exit(EXIT_FAILURE);
-		line = ft_trim(line, '\t');
+		i = -1;
+		while (line[++i])
+			if (line[i] == '\t')
+				line[i] = ' ';
 		line = ft_trim(line, ' ');
 		if (ft_strncmp(line, "exit", 5) == 0)
 			exit(EXIT_SUCCESS);
-		pid = fork();
-		if (pid > 0)
-			waitpid(pid, 0, 0);
-		if (pid == 0)
-			execute(line, envp);
+		if (line[0])
+		{
+			dec = ft_strsplit(line, ' ');
+			ft_check(envp, dec);
+		}
 	}
 }
 
@@ -78,7 +95,7 @@ int				main(int argc, char *argv[], char *envp[])
 		return (-1);
 	if (!(envp_bkp = env_cpy(envp)))
 	{
-		ft_putendl_fd("Environment Error. Find project's developper and kick him", 2);
+		ft_putendl_fd("Envp Error. Find project's developper and kick him", 2);
 		return (-1);
 	}
 	ft_sh1(envp_bkp, line);
@@ -88,21 +105,14 @@ int				main(int argc, char *argv[], char *envp[])
 /*
 ** afficher un prompt
 ** lire la ligne
-** excecuter la commande
+** decouper la ligne
+** verifier si c'est un builtin ou un executable
+** si c'est un executable
+** >>forker
+** >>excecuter la commande
+** >>quitter le processus forke
+** si c'est un builtin
+** >>lancer la fonction builtin
+** >>retourner l'environnement
 ** boucler le tout
-*/
-
-/*
-**	pid_t		father;
-**	father = fork();
-**	if (father > 0)
-**	{
-**		put_prompt();
-**		wait(NULL);
-**	}
-**	if (father == 0)
-**	{
-**		execve("/bin/ls", argv, NULL);
-**		fork();
-**	}
 */

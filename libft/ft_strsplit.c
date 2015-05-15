@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/17 16:56:58 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/11 22:36:49 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/11 14:03:00 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char		**ft_strsplit_bis(char *s, char c, char **tab, size_t *i)
 	{
 		while (s[i[0]] == c && s[i[0]])
 			i[0]++;
-		tab[i[1]] = ft_strnew(ft_wdlen(s, c, i[0]));
+		tab[i[1]] = ft_strnew(ft_wdlen(s, c, i[0]) + 1);
 		i[2] = 0;
 		while(s[i[0]] != c && s[i[0]])
 			tab[i[1]][i[2]++] = s[i[0]++];
@@ -42,7 +42,7 @@ char			**ft_strsplit(char const *s, char c)
 	if ((bkp = ft_strdup(s)))
 		bkp = ft_trim(bkp, c);
 	i[0] = 0;
-	if (!bkp || !c || !(tab = (char **)malloc(sizeof(char *) * ft_nwd(bkp, c) + 1)))
+	if (!bkp || !c || !(tab = (char **)malloc(sizeof(char *) * ft_nwd(bkp, c) + 2)))
 		return (NULL);
 	tab[ft_nwd(bkp, c)] = NULL;
 	i[0] = 0;

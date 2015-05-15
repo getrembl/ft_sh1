@@ -6,7 +6,7 @@
 /*   By: getrembl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 17:55:55 by getrembl          #+#    #+#             */
-/*   Updated: 2015/03/26 16:52:03 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/07 15:50:04 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ size_t		ft_tablen(char **s)
 	size_t	count;
 
 	count = 0;
-	while (s[count])
-		count++;
+	if (s)
+		while (s[count])
+			count++;
 	return (count);
 }

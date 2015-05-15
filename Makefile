@@ -6,7 +6,7 @@
 #    By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/09 14:29:46 by getrembl          #+#    #+#              #
-#    Updated: 2015/03/28 18:20:32 by getrembl         ###   ########.fr        #
+#    Updated: 2015/05/07 13:49:28 by getrembl         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,6 +14,7 @@ NAME		= ft_minishell1
 SRC			= minishell_1.c \
 				prompt.c \
 				execute.c \
+				ft_builtin.c
 
 OBJ			= $(SRC:.c=.o)
 CC			= /usr/bin/gcc
