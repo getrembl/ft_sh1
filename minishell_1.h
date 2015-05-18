@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/04 19:03:48 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/15 11:52:23 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/18 14:26:48 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@
 
 typedef void	(*sighandler_t)(int);
 
+char			**cd_builtin(char **dec, char **envp, char *pwd);
 char			**ft_builtin(char **dec, char **envp);
+char			**ft_pwd(char **envp);
 
 void			execute(char **dec, char **envp_bkp);
 void			prompt(char **envp);
