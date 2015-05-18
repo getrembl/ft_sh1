@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:14:50 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/06 17:58:19 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/18 16:15:02 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*mk_usr(char *usr)
 {
 	if (usr)
 	{
-		if(!(usr = ft_strdup(usr)))
+		if (!(usr = ft_strdup(usr)))
 			return (NULL);
 		usr = ft_strchr(usr, '=');
 		usr++;
@@ -62,7 +62,7 @@ void		prompt(char **envp)
 	int		i;
 
 	i = 0;
-	usr = ft_strnew(2);;
+	usr = ft_strnew(2);
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "USER", 4) == 0)
@@ -76,6 +76,3 @@ void		prompt(char **envp)
 	ft_putstr(ret);
 	ft_strdel(&ret);
 }
-
-
-

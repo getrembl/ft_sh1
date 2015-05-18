@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/27 18:06:59 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/15 11:52:12 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/18 16:21:10 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			execute(char **dec, char **envp)
 		ft_strcat(path_tab[i], "/");
 		if (access(ft_strcat(path_tab[i], dec[0]), X_OK) == 0)
 		{
-			if((execve(path_tab[i], dec, envp)) == -1)
+			if ((execve(path_tab[i], dec, envp)) == -1)
 				exit(EXIT_FAILURE);
 			else
 				exit(EXIT_SUCCESS);

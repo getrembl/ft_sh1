@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/18 11:41:29 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/18 16:03:19 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/18 16:20:44 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void		ft_cd(char *pth, char *cwd)
 	char		path[BUFFERSIZE];
 
 	ft_strcpy(path, pth);
-	if(pth[0] != '/')
+	if (pth[0] != '/')
 	{
 		ft_strcat(cwd, "/");
 		ft_strcat(cwd, path);
@@ -30,6 +30,7 @@ static void		ft_cd(char *pth, char *cwd)
 			ft_putendl_fd("This directory dosn't exist.", 2);
 	}
 	else
+	{
 		if (access(pth, F_OK) == 0)
 			if (access(pth, R_OK) == 0)
 				chdir(pth);
@@ -37,6 +38,7 @@ static void		ft_cd(char *pth, char *cwd)
 				ft_putendl_fd("You don't have a rights.", 2);
 		else
 			ft_putendl_fd("This directory dosn't exist.", 2);
+	}
 }
 
 static char		*cd_home(char *dec, char **envp)

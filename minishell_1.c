@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/15 11:56:28 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/18 16:16:00 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char		**env_cpy(char **envp)
 	return (ret);
 }
 
-static void			ft_check(char **envp, char **dec)
+static void		ft_check(char **envp, char **dec)
 {
 	pid_t		pid;
 
@@ -54,7 +54,7 @@ static void			ft_check(char **envp, char **dec)
 	}
 }
 
-static void			ft_sh1(char **envp, char *line)
+static void		ft_sh1(char **envp, char *line)
 {
 	int			end;
 	char		**dec;

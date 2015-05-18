@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/17 16:56:58 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/11 14:03:00 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/18 16:11:15 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char		**ft_strsplit_bis(char *s, char c, char **tab, size_t *i)
 			i[0]++;
 		tab[i[1]] = ft_strnew(ft_wdlen(s, c, i[0]) + 1);
 		i[2] = 0;
-		while(s[i[0]] != c && s[i[0]])
+		while (s[i[0]] != c && s[i[0]])
 			tab[i[1]][i[2]++] = s[i[0]++];
 		if (i[1] < (ft_tablen(tab)))
 			i[1]++;
@@ -35,32 +35,29 @@ static char		**ft_strsplit_bis(char *s, char c, char **tab, size_t *i)
 
 char			**ft_strsplit(char const *s, char c)
 {
-	char		*bkp;
+	char		*b;
 	char		**tab;
 	size_t		i[3];
 
-	if ((bkp = ft_strdup(s)))
-		bkp = ft_trim(bkp, c);
+	if ((b = ft_strdup(s)))
+		b = ft_trim(b, c);
 	i[0] = 0;
-	if (!bkp || !c || !(tab = (char **)malloc(sizeof(char *) * ft_nwd(bkp, c) + 2)))
+	if (!b || !c || !(tab = (char **)malloc(sizeof(char *) * ft_nwd(b, c) + 2)))
 		return (NULL);
-	tab[ft_nwd(bkp, c)] = NULL;
+	tab[ft_nwd(b, c)] = NULL;
 	i[0] = 0;
-	if (*bkp == '\0')
+	if (*b == '\0')
 	{
 		tab[i[0]] = NULL;
 		return (tab);
 	}
-	while (bkp[i[0]] != c && bkp[i[0]])
+	while (b[i[0]] != c && b[i[0]])
 		i[0]++;
-	if (!bkp[i[0]])
+	if (!b[i[0]])
 	{
-		tab[0] = ft_strdup(bkp);
+		tab[0] = ft_strdup(b);
 		tab[1] = NULL;
 		return (tab);
 	}
-	return (ft_strsplit_bis(bkp, c, tab, i));
+	return (ft_strsplit_bis(b, c, tab, i));
 }
-
-
-
