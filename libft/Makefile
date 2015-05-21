@@ -6,7 +6,7 @@
 #    By: getrembl <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 16:47:42 by getrembl          #+#    #+#              #
-#    Updated: 2015/04/11 23:08:26 by getrembl         ###   ########.fr        #
+#    Updated: 2015/05/19 09:51:23 by getrembl         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -28,7 +28,7 @@ SRCS =				ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c\
 						ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c\
 						ft_itoa.c ft_nbdigit.c ft_strlcat.c ft_strnstr.c\
 						ft_strsplit.c ft_nwd.c ft_wdlen.c get_next_line.c\
-						ft_tablen.c ft_trim.c ft_mvtab.c\
+						ft_tablen.c ft_trim.c ft_mvtab.c ft_strncapitalize.c\
 
 OBJS =				$(SRCS:.c=.o)
 

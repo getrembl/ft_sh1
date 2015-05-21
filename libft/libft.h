@@ -6,7 +6,7 @@
 /*   By: getrembl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 16:46:43 by getrembl          #+#    #+#             */
-/*   Updated: 2015/04/11 23:09:33 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/19 09:50:32 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char			*ft_strdup(char const *s1);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strmap(char const *s, char (*f)(char));
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+char			*ft_strncapitalize(char *str, size_t n);
 char			*ft_strncat(char *s1, const char *s2, size_t n);
 char			*ft_strncpy(char *dst, const char *src, size_t n);
 char			*ft_strnew(size_t size);
