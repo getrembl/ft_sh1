@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/19 19:16:23 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/22 20:06:53 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ static void		ft_check(char **envp, char **dec)
 		|| ft_strncmp(dec[0], "export", 6) == 0
 		|| ft_strncmp(dec[0], "unsetenv", 8) == 0
 		|| ft_strncmp(dec[0], "unset", 5) == 0)
-	{
 		if (!(envp = ft_builtin(dec, envp)))
 			ft_putendl_fd("Error. find project's developper and kick him", 2);
-	}
 	else
 	{
 		pid = fork();

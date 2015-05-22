@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/07 11:43:46 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/21 16:33:42 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/22 20:05:32 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@
 */
 
 
-static char		**ft_setenv(char *set, int overwrite, char **envp)
+static char		**ft_setenv(char *set, char **envp)
 {
-	int			i;
+/*	int			i;
 	int			j;
 	int			k;
 	int			l;
 
-	overwrite = 1;
 	i = -1;
 	j = ft_wdlen(set, '=', 0);
 	while (envp[++i])
@@ -46,17 +45,20 @@ static char		**ft_setenv(char *set, int overwrite, char **envp)
 			}
 			envp[i] = ft_strcat(envp[i], set);
 		}
+	}
 	if ((size_t)i == ft_tablen(envp))
-		envp[i + 1] = ft_strdup(set);
+	{
+		envp[i] = ft_strdup(set);
+		envp[i + 1] = NULL;
+	}
 	return (envp);
-/*	int			i;
+*/	int			i;
 	char		**tab;
 
 	tab = ft_strsplit(set, '=');
 	tab[0] = ft_strncapitalize(tab[0], ft_strlen(tab[0]));
 	ft_strcat(tab[0], "=");
 	i = 0;
-	overwrite = 1;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], tab[0], ft_strlen(tab[0])) == 0)
@@ -64,7 +66,7 @@ static char		**ft_setenv(char *set, int overwrite, char **envp)
 			if (ft_strncmp(tab[0], "PATH=", 5) == 0
 				&& ft_strncmp(tab[1], "$PATH:", 6) == 0)
 			{
-				while (**tab != ':')
+				while (*tab[1] != ':')
 					tab[1]++;
 				ft_strcat(envp[i], tab[1]);
 				return (envp);
@@ -82,7 +84,7 @@ static char		**ft_setenv(char *set, int overwrite, char **envp)
 	if (!(envp[i] = ft_strdup(tab[0])))
 		return (NULL);
 	ft_strcat(envp[i], tab[1]);
-	return (envp);*/
+	return (envp);
 }
 
 static char		**ft_unsetenv(char *var, char **envp)
@@ -156,7 +158,7 @@ char			**ft_builtin(char **dec, char **envp)
 			envp = ft_pwd(envp);
 	if ((ft_strncmp(dec[0], "setenv", 6) == 0)
 		|| (ft_strncmp(dec[0], "export", 6) == 0))
-		if (!(envp = ft_setenv(dec[1], ft_atoi(dec[2]), envp)))
+		if (!(envp = ft_setenv(dec[1], envp)))
 			exit(EXIT_FAILURE);
 	if (ft_strncmp(dec[0], "unsetenv", 8) == 0
 		|| ft_strncmp(dec[0], "unset", 5) == 0)
