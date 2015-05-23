@@ -6,7 +6,7 @@
 #    By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/09 14:29:46 by getrembl          #+#    #+#              #
-#    Updated: 2015/05/18 14:27:02 by getrembl         ###   ########.fr        #
+#    Updated: 2015/05/23 10:17:04 by getrembl         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -24,15 +24,19 @@ CFLAGS		= -Wall -Wextra -Werror
 CDEBUG		= -Wall -Wextra -Werror -ansi -pedantic -g
 RM			= /bin/rm -f
 ECHO		= /bin/echo -e
+LIBFT		= libft/libft.a
+HPATH		= -I libft/includes
 
-$(NAME)	:		$(OBJ)
-				@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft.a
+$(NAME)	:		$(LIBFT) $(OBJ)
+				@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L libft/ -lft
 				@$(ECHO) '> Compiled'
 
 clean	:
 				-@$(RM) $(OBJ)
 				-@$(RM) *~
 				@$(ECHO) '> Directory cleaned'
+$(LIBFT) :
+				Make -C libft
 
 all		:		$(NAME)
 
@@ -49,4 +53,4 @@ debug	:		$(OBJ)
 				@$(ECHO) '> Mode Debug: done'
 
 .c.o	:
-				$(CC) $(CFLAGS) -o $@ -c $<
+				$(CC) $(CFLAGS) $(HPATH) -o $@ -c $<
