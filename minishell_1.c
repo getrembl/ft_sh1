@@ -6,30 +6,11 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/09 14:32:17 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/23 10:11:24 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/26 12:36:01 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_1.h"
-
-static char		**env_cpy(char **envp)
-{
-	char		**ret;
-	int			i;
-
-	i = 0;
-	if (!(ret = (char **)malloc(sizeof(char *) * ft_tablen(envp) + 1)))
-		return (NULL);
-	ret[ft_tablen(envp)] = NULL;
-	ret[ft_tablen(envp) + 1] = NULL;
-	while (envp[i])
-	{
-		if (!(ret[i] = ft_strdup(envp[i])))
-			return (NULL);
-		i++;
-	}
-	return (ret);
-}
 
 static void		ft_check(char **envp, char **dec)
 {
@@ -94,7 +75,7 @@ int				main(int argc, char *argv[], char *envp[])
 	}
 	if (!(line = ft_strnew(2)) || !argc || !argv)
 		return (-1);
-	if (!(envp_bkp = env_cpy(envp)))
+	if (!(envp_bkp = ft_tabdup((const char**)envp)))
 	{
 		ft_putendl_fd("Envp Error. Find project's developper and kick him", 2);
 		return (-1);
@@ -104,16 +85,21 @@ int				main(int argc, char *argv[], char *envp[])
 }
 
 /*
-** afficher un prompt
-** lire la ligne
-** decouper la ligne
-** verifier si c'est un builtin ou un executable
-** si c'est un executable
-** >>forker
-** >>excecuter la commande
-** >>quitter le processus forke
-** si c'est un builtin
-** >>lancer la fonction builtin
-** >>retourner l'environnement
-** boucler le tout
+**
+** PSEUDO SHELL
+**
+** copier environnement
+** debut boucle
+** ....afficher un prompt
+** ....lire la ligne
+** ....decouper la ligne
+** ....verifier si c'est un builtin ou un executable
+** ....si c'est un executable
+** ........forker
+** ........excecuter la commande
+** ........quitter le processus forke
+** ....si c'est un builtin
+** ........lancer la fonction builtin
+** ........retourner l'environnement
+** fin boucle
 */

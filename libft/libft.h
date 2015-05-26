@@ -6,7 +6,7 @@
 /*   By: getrembl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 16:46:43 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/19 09:50:32 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/26 12:04:39 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 char			**ft_mvtab(char **tab, int i);
 char			**ft_strsplit(char const *s, char c);
+char			**ft_tabdup(const char **tab);
 
 char			*ft_itoa(int n);
 char			*ft_strcat(char *s1, const char *s2);

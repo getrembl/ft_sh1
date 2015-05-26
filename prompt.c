@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/12 21:14:50 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/18 16:15:02 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/26 11:08:09 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*mkpt(char *usr, char *pwd, char *inv)
 
 static char	*mk_usr(char *usr)
 {
-	if (usr)
+	if (usr && usr[0])
 	{
 		if (!(usr = ft_strdup(usr)))
 			return (NULL);
@@ -44,7 +44,7 @@ static char	*mk_pwd(void)
 
 	pwd = ft_strnew(2);
 	getcwd(pwd, BUFFERSIZE);
-	if (pwd)
+	if (pwd && pwd[0])
 	{
 		pwd = ft_strrchr(pwd, '/');
 		pwd++;

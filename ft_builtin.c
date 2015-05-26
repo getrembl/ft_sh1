@@ -6,7 +6,7 @@
 /*   By: getrembl <getrembl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/07 11:43:46 by getrembl          #+#    #+#             */
-/*   Updated: 2015/05/22 20:05:32 by getrembl         ###   ########.fr       */
+/*   Updated: 2015/05/26 12:35:21 by getrembl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,72 +19,32 @@
 
 static char		**ft_setenv(char *set, char **envp)
 {
-/*	int			i;
-	int			j;
-	int			k;
-	int			l;
-
-	i = -1;
-	j = ft_wdlen(set, '=', 0);
-	while (envp[++i])
-	{
-		if (ft_strncmp(envp[i], set, j) == 0)
-		{
-			k = ft_wdlen(envp[i], '=', 0);
-			l = ft_strlen(envp[i]);
-			while (k <= l)
-			{
-				envp[i][k] = '\0';
-				k++;
-			}
-			l = 0;
-			while (l <= j)
-			{
-				set++;
-				l++;
-			}
-			envp[i] = ft_strcat(envp[i], set);
-		}
-	}
-	if ((size_t)i == ft_tablen(envp))
-	{
-		envp[i] = ft_strdup(set);
-		envp[i + 1] = NULL;
-	}
-	return (envp);
-*/	int			i;
+	int			i;
 	char		**tab;
 
 	tab = ft_strsplit(set, '=');
 	tab[0] = ft_strncapitalize(tab[0], ft_strlen(tab[0]));
-	ft_strcat(tab[0], "=");
-	i = 0;
-	while (envp[i])
-	{
+	tab[0] = ft_strdup(ft_strcat(tab[0], "="));
+	i = -1;
+	while (envp[++i])
 		if (ft_strncmp(envp[i], tab[0], ft_strlen(tab[0])) == 0)
 		{
 			if (ft_strncmp(tab[0], "PATH=", 5) == 0
 				&& ft_strncmp(tab[1], "$PATH:", 6) == 0)
 			{
-				while (*tab[1] != ':')
+				while (*tab[1] != ':' && tab[1])
 					tab[1]++;
-				ft_strcat(envp[i], tab[1]);
-				return (envp);
+				if(!(envp[i] = ft_strdup(ft_strcat(tab[0], tab[1]))))
+					return (NULL);
 			}
 			else
-			{
-				if (!(envp[i] = ft_strdup(tab[0])))
+				if (!(envp[i] = ft_strdup(ft_strcat(tab[0], tab[1]))))
 					return (NULL);
-				ft_strcat(envp[i], tab[1]);
-				return (envp);
-			}
+			return (envp);
 		}
-		i++;
-	}
-	if (!(envp[i] = ft_strdup(tab[0])))
+	if (!(envp[i] = ft_strdup(ft_strcat(tab[0], tab[1]))))
 		return (NULL);
-	ft_strcat(envp[i], tab[1]);
-	return (envp);
+	return (envp = ft_tabdup((const char **)envp));
 }
 
 static char		**ft_unsetenv(char *var, char **envp)
@@ -111,7 +71,9 @@ static char		**ft_unsetenv(char *var, char **envp)
 static void		ft_putenv(char **envp, char **dec)
 {
 	int			i[2];
+	char		**env_bkp;
 
+	env_bkp = ft_tabdup((const char**)envp);
 	i[0] = -1;
 	i[1] = 0;
 	if (envp)
